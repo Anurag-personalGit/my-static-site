@@ -3,6 +3,10 @@
      build:
        commands:
          - echo "Nothing to compile, plain HTML/CSS/JS site"
+     post_build:
+       commands:
+         - echo "Invalidating CloudFront cache so the new version shows immediately"
+         - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DIST_ID --paths "/*"
    artifacts:
      files:
        - '**/*'
